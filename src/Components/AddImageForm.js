@@ -11,7 +11,8 @@ function AddImageForm({ setShowForm }) {
         const values = [...formData.entries()];
         console.log(values);
         // console.log(formData);
-        let url = "http://localhost:8000/api/gallery/images";
+        // let url = "http://localhost:8000/api/gallery/images";
+        let url = "https://gallery-api-rpqq.onrender.com/api/gallery/images";
 
         axios.post(url,{values})
             .then((res) => {

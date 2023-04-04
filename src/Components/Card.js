@@ -5,7 +5,8 @@ function Card({ imageName, url, id }) {
     const [showDelete, setShowDelete] = useState(false);
     const deleteImage = (deleteId) => {
         console.log(id)
-        let url = `http://localhost:8000/api/gallery/images/:${deleteId}`;
+        // let url = `http://localhost:8000/api/gallery/images/:${deleteId}`;
+        let url = `https://gallery-api-rpqq.onrender.com/api/gallery/images/:${deleteId}`;
 
         axios.delete(url)
             .then((res) => {
