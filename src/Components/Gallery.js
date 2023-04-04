@@ -8,7 +8,9 @@ function Gallery() {
     const [fetchedData,setFetchedData] = useState([])
     const [showForm, setShowForm] = useState(false)
     const getImages = async () => {
-        let data = await fetch("http://localhost:8000/api/gallery/images");
+        let fetchurl = "https://gallery-api-rpqq.onrender.com/api/gallery/images";
+        // let url = "http://localhost:8000/api/gallery/images";
+        let data = await fetch(fetchurl);
         let images = await data.json();
         // console.log(images)
         setFetchedData(images.images);
