@@ -1,33 +1,44 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import axios from 'axios';
 
-function Card({ imageName, url, id }) {
+const Card = forwardRef(({ imageName,url,id,suretoDelete,setSureToDelete, password},ref) => {
     const [showDelete, setShowDelete] = useState(false);
-    const deleteImage = (deleteId) => {
-        console.log(id)
-        // let url = `http://localhost:8000/api/gallery/images/:${deleteId}`;
-        let url = `https://gallery-api-rpqq.onrender.com/api/gallery/images/:${deleteId}`;
+    const [deleteId,setDeleteId] = useState('')
 
-        axios.delete(url)
-            .then((res) => {
-                alert("Image Deleted succesfully");
-                window.location.reload();
-                console.log(res)
-            })
-            .catch((err) => {
-                alert("Oops Something went wrong!");
-                console.log(err)
+    useImperativeHandle(ref,()=>({
+         deleteImage() {
+            console.log(id)
+            // let url = `http://localhost:8000/api/gallery/images/:${deleteId}`;
+            let url = `https://gallery-api-rpqq.onrender.com/api/gallery/images/:${deleteId}`;
+            console.log(password)
+            if(suretoDelete && password ==='yogesh'){
+                axios.delete(url)
+                .then((res) => {
+                    alert("Image Deleted succesfully");
+                    window.location.reload();
+                    console.log(res)
+                    setSureToDelete(false)
+                })
+                .catch((err) => {
+                    alert("Oops Something went wrong!");
+                    console.log(err)
+                }
+                )
             }
-            )
-    }
+        }
+    }))
+    
+    
 
     return (
         <div className='card' onMouseEnter={() => { setShowDelete(true) }} onMouseLeave={() => { setShowDelete(false) }}>
-            {showDelete && <button className='delete' onClick={() =>deleteImage(id)}>Delete</button>}
+            {showDelete && <button className='delete' onClick={() =>{
+                setSureToDelete(true)
+                setDeleteId(id)}}>Delete</button>}
             <img src={url} alt={imageName} />
             <div className='imageName'>{imageName}</div>
         </div>
     )
-}
+})
 
 export default Card
